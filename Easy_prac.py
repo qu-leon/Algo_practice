@@ -41,3 +41,25 @@ class Solutions:
             else:
                 stack.append(char)
         return not stack
+
+    def mergeTwoLists(self, list1, list2):
+        """
+        Merge two sorted linked lists and return it as a new sorted list.
+        The new list should be made by splicing together the nodes of the first two lists.
+        """
+        # create a dummy node to store the head of the new list
+        dummy = ListNode(0)
+        current = dummy
+        while list1 and list2:
+            if list1.val < list2.val:
+                current.next = list1
+                list1 = list1.next
+            else:
+                current.next = list2
+                list2 = list2.next
+            current = current.next
+        if list1:
+            current.next = list1
+        else:
+            current.next = list2
+        return dummy.next
