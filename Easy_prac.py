@@ -2,8 +2,6 @@
 This is a practice file for the easy problems in the LeetCode.
 """
 
-from collections import Counter
-
 
 class ListNode:
     def __init__(self, val=0, next=None):
@@ -164,3 +162,38 @@ class Solutions:
             else:
                 right = mid - 1  # continue searching left half of array
         return -1
+
+    def floodFill(self, image, sr: int, sc: int, color: int):
+        """
+        An image is represented by a 2-D array of integers, each integer representing the pixel value of the image.
+        Given a coordinate (sr, sc) representing the starting pixel (row and column) of the flood fill, and a pixel value newColor,
+        "flood fill" the image.
+
+        To perform a "flood fill", consider the starting pixel, plus any pixels connected 4-directionally to the starting pixel of the same color as the starting pixel,
+        plus any pixels connected 4-directionally to those pixels (also with the same color as the starting pixel), and so on.
+        Replace the color of all of the aforementioned pixels with the newColor.
+        """
+        if image[sr][sc] == color:
+            return image
+        newColor = image[sr][sc]
+        if color != newColor:
+            self.dfs(image, sr, sc, color, newColor)
+        return image
+
+    # uses a depth-first search to fill the pixels with the new color
+    def dfs(
+        self, image, r, c, color, newColor
+    ):  # r, c are the row and column of the current pixel
+        if (
+            r < 0
+            or r >= len(image)
+            or c < 0
+            or c >= len(image[0])
+            or newColor != image[r][c]
+        ):
+            return
+        image[r][c] = color
+        self.dfs(image, r + 1, c, color, newColor)
+        self.dfs(image, r - 1, c, color, newColor)
+        self.dfs(image, r, c + 1, color, newColor)
+        self.dfs(image, r, c - 1, color, newColor)
