@@ -197,3 +197,33 @@ class Solutions:
         self.dfs(image, r - 1, c, color, newColor)
         self.dfs(image, r, c + 1, color, newColor)
         self.dfs(image, r, c - 1, color, newColor)
+
+    def isBalancedBinary(self, root) -> bool:
+        """
+        Given a binary tree, determine if it is height balanced
+        """
+
+        # uses a recursive function to check if the tree is balanced
+        def check(root):
+            if not root:
+                return 0
+            left = check(root.left)
+            right = check(root.right)
+            if left == -1 or right == -1 or abs(left - right) > 1:
+                return -1
+            return 1 + max(left, right)
+
+        return check(root) != -1
+
+    def hasCycle(self, head) -> bool:
+        """
+        Given a linked list, determine if it has a cycle in it.
+        """
+        # uses two pointers to detect a cycle in the linked list
+        slow = fast = head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                return True
+        return False
