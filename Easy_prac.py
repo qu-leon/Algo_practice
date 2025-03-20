@@ -227,3 +227,60 @@ class Solutions:
             if slow == fast:
                 return True
         return False
+
+    def firstBadVersion(self, n: int) -> int:
+        """
+        Given a number n, return the first bad version.
+        """
+        left = 1
+        right = n
+        while left <= right:
+            mid = left + (right - left) // 2
+            if isBadVersion(mid):
+                right = mid
+            else:
+                left = mid + 1
+        return left
+
+    def canConstruct(self, ransomNote: str, magazine: str) -> bool:
+        """
+        Given two strings ransomNote and magazine, return true if ransomNote can be constructed from magazine and false otherwise.
+        Each letter in magazine can only be used once in ransomNote.
+        """
+        hashmap = {}
+        for char in magazine:
+            if char in hashmap:
+                hashmap[char] += 1
+            else:
+                hashmap[char] = 1
+        for char in ransomNote:
+            if char in hashmap and hashmap[char] > 0:
+                hashmap[char] -= 1
+            else:
+                return False
+        return True
+
+
+class MyQueue:
+
+    def __init__(self):
+        """
+        Initialize FIFO queue with two stacks
+        """
+        self.stack1 = []
+        self.stack2 = []
+
+    def push(self, x: int) -> None:
+        self.stack1.append(x)
+        self.stack2 = self.stack1[::-1]  # reverses the stack
+
+    def pop(self) -> int:
+        return self.stack2.pop()  # removes the last element in the stack
+
+    def peek(self) -> int:
+        return self.stack2[-1]  # returns the last element in the stack
+
+    def empty(self) -> bool:
+        if not self.stack1 and not self.stack2:
+            return True
+        return False
