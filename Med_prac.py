@@ -262,3 +262,29 @@ class Solutions2:
             if inorder[i] <= inorder[i - 1]:
                 return False
         return True
+
+    def canPartition(self, nums) -> bool:
+        """
+        Given an integer array, return Ture if you can partition the array into two subsets such that the sum of the elements
+        in both subsets is equal or false otherwise.
+        """
+        # uses dynamic programming concept
+        total = sum(nums)
+        if total % 2 == 1:  # if sum of all values is odd, return false
+            return False
+
+        target = (
+            total // 2
+        )  # determine what is sum in which both subsets should add up to
+        dp = [False] * (target + 1)
+        dp[0] = True  # base case - single value will always be true
+
+        for n in nums:
+            for i in range(len(dp) - 1, n - 1, -1):
+                if dp[i]:
+                    continue
+                if dp[i - n]:
+                    dp[i] = True
+                if dp[-1]:
+                    return True
+        return False
