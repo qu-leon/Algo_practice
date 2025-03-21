@@ -35,3 +35,15 @@ class Solutions3:
                     total += right_max - height[right]
                 right -= 1
         return total
+
+    def firstMissingPositive(self, nums) -> int:
+        nums = [n for n in nums if n > 0]
+        nums.sort()
+        target = 1
+
+        for n in nums:
+            if n == target:
+                target += 1
+            elif n > target:
+                return target
+        return target

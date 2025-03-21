@@ -243,3 +243,22 @@ class Solutions2:
             self.generate(s + "(", left - 1, right, result)
         if right > left:
             self.generate(s + ")", left, right - 1, result)
+
+    def isValidBST(self, root) -> bool:
+        """
+        Given the root of binary tree, determine if it is a valid BST.
+        """
+
+        # helper function with base case - recursively returns node values until it reaches the end
+        def inorderTraversal(node):
+            if not node:
+                return []
+            return (
+                inorderTraversal(node.left) + [node.val] + inorderTraversal(node.right)
+            )
+
+        inorder = inorderTraversal(root)
+        for i in range(1, len(inorder)):
+            if inorder[i] <= inorder[i - 1]:
+                return False
+        return True
