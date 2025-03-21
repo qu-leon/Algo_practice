@@ -119,7 +119,8 @@ class Solutions2:
 
     def threeSum(self, nums):
         """
-        Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+        Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k] such that i != j, i != k, and j != k,
+        and nums[i] + nums[j] + nums[k] == 0.
         """
         # uses a two-pointer approach to find all unique triplets that sum to zero
         nums.sort()
@@ -192,7 +193,8 @@ class Solutions2:
 
     def sortColors(self, nums) -> None:
         """
-        Given an array nums with n objects colored red, white, or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white, and blue.
+        Given an array nums with n objects colored red, white, or blue, sort them in-place so that objects of the same
+        color are adjacent, with the colors in the order red, white, and blue.
         """
         # uses a two-pass approach to sort the colors
         red = white = 0
@@ -222,3 +224,22 @@ class Solutions2:
         for i in range(n - 2, -1, -1):  # iterate backwards
             right[i] = right[i + 1] * nums[i + 1]
         return [left[i] * right[i] for i in range(n)]
+
+    def generateParentheses(self, n: int):
+        """
+        Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+        """
+
+        # uses a recursive approach to generate all combinations of well-formed parentheses
+        result = []
+        self.generate("", n, n, result)
+        return result
+
+    def generate(self, s, left, right, result):
+        if left == 0 and right == 0:
+            result.append(s)
+            return
+        if left > 0:
+            self.generate(s + "(", left - 1, right, result)
+        if right > left:
+            self.generate(s + ")", left, right - 1, result)

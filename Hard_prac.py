@@ -6,7 +6,8 @@ This is a practice file for the hard problems in the LeetCode.
 class Solutions3:
     def trap(self, height) -> int:  # height is an array of integers
         """
-        Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.
+        Given n non-negative integers representing an elevation map where the width of each bar is 1,
+        compute how much water it can trap after raining.
         """
         # uses two pointers to keep track of the left and right bounds
         left = 0
