@@ -228,6 +228,9 @@ class Solutions:
                 return True
         return False
 
+    def isBadVersion(self, n) -> bool:
+        pass
+
     def firstBadVersion(self, n: int) -> int:
         """
         Given a number n, return the first bad version.
@@ -236,7 +239,7 @@ class Solutions:
         right = n
         while left <= right:
             mid = left + (right - left) // 2
-            if isBadVersion(mid):
+            if self.isBadVersion(mid):
                 right = mid
             else:
                 left = mid + 1
