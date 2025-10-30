@@ -265,7 +265,7 @@ class Solutions2:
 
     def canPartition(self, nums) -> bool:
         """
-        Given an integer array, return Ture if you can partition the array into two subsets such that the sum of the elements
+        Given an integer array, return True if you can partition the array into two subsets such that the sum of the elements
         in both subsets is equal or false otherwise.
         """
         # uses dynamic programming concept
