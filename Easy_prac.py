@@ -294,6 +294,10 @@ class Solutions:
                 hash_set.add(i)  # add current element to list
         return False
 
+    def getConcatenation(self, nums: list[int]) -> list[int]:
+        ans = nums.extend(nums)
+        return ans
+
 
 class MyQueue:
 
