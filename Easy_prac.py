@@ -298,6 +298,32 @@ class Solutions:
         ans = nums.extend(nums)
         return ans
 
+    def shuffle(self, nums: list[int], n: int) -> list[int]:
+        """
+        Given array nums consisting of 2n elements. Return array in form of [x1, y1, x2, y2...]
+        """
+        ans = []
+        for i, j in zip(nums[:n], nums[n:]):
+            ans.append(i)
+            ans.append(j)
+
+        return ans
+
+    def findMaxConsecutiveOnes(self, nums: list[int]) -> int:
+        """ "
+        Given a binary array nums, return the maximum number of consecutive 1's in the array.
+        """
+        count = 0
+        count1 = 0
+        for i in range(len(nums)):
+            if nums[i] == 1:
+                count += 1
+            else:
+                count = 0
+            count1 = max(count, count1)
+
+        return count1
+
 
 class MyQueue:
 
