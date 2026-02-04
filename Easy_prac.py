@@ -19,7 +19,7 @@ class Solutions:
         You may assume that each input would have exactly one solution, and you may not use the same element twice.
         """
         # uses a hashmap to store the difference between the target and the current number
-        hashmap = {}
+        hashmap = {}  # val: index
         for i, num in enumerate(nums):
             diff = target - num
             if diff in hashmap:
@@ -323,6 +323,53 @@ class Solutions:
             count1 = max(count, count1)
 
         return count1
+
+    def findErrorNums(self, nums: list[int]) -> list[int]:
+        """
+        You have a set of integers s, which originally contains all the numbers from 1 to n.
+        Unfortunately, due to some error, one of the numbers in s got duplicated to another number in the set,
+        find the number that occurs twice and the number that is missing and return them in the form of an array.
+        """
+        n = len(nums)
+        num_set = set()
+        duplicate = -1
+        for num in nums:
+            if num in num_set:
+                duplicate = num
+            else:
+                num_set.add(num)
+        missing = -1
+        for i in range(1, n + 1):
+            if i not in num_set:
+                missing = i
+                break
+        return [duplicate, missing]
+
+    def smallerNumbersThanCurrent(self, nums: list[int]) -> list[int]:
+        """
+        Given the array nums, for each nums[i] find out how many numbers in the array are smaller than it.
+        That is for each nums[i] you have to count the number of valid j's such that j != i and nums[j] < nums[i].
+        """
+        result = []
+        for i in range(len(nums)):
+            count = 0
+            for j in range(len(nums)):
+                if nums[j] < nums[i]:
+                    count += 1
+            result.append(count)
+        return result
+
+    def findDisappearedNumbers(self, nums: list[int]) -> list[int]:
+        """
+        Given an array nums of n integers where nums[i] is in the range [1, n],
+        return an array of all integers in the range [1, n] that do not appear in nums.
+        """
+        num_set = set(nums)
+        result = []
+        for i in range(1, len(nums) + 1):
+            if i not in num_set:
+                result.append(i)
+        return result
 
 
 class MyQueue:

@@ -3,6 +3,7 @@ This is a practice file for the medium problems in the LeetCode.
 """
 
 import heapq
+from typing import List
 
 
 class TreeNode:
@@ -312,4 +313,66 @@ class Solutions2:
                 for i in range(bottom, top - 1, -1):
                     result.append(matrix[i][left])
                 left += 1
+        return result
+
+    def buildArray(self, target: List[int], n: int) -> List[str]:
+        """
+        Given a target array and an integer n, return a list of operations to build the target array.
+        """
+        result = []
+        current = 1
+        for num in target:
+            while current < num:
+                result.append("Push")
+                result.append("Pop")
+                current += 1
+            result.append("Push")
+            current += 1
+        return result
+
+    def evalRPN(self, tokens: List[str]) -> int:
+        """
+        Given an arry of string tokens representing an arithmetic expression in Reverse Polish Notation, evaluate the expression.
+        Return an integer that represents the value of the expression.
+        """
+        stack = []
+        for token in tokens:
+            if token in {"+", "-", "*", "/"}:
+                b = stack.pop()  # second operand
+                a = stack.pop()  # first operand
+                if token == "+":
+                    stack.append(a + b)
+                elif token == "-":
+                    stack.append(a - b)
+                elif token == "*":
+                    stack.append(a * b)
+                elif token == "/":
+                    stack.append(int(a / b))
+            else:
+                stack.append(int(token))  # base case
+
+        return stack[0]
+
+    def exclusiveTime(self, n: int, logs: List[str]) -> List[int]:
+        """
+        Given the number of functions n and a list of logs representing function calls, return the exclusive time of each function.
+        """
+        result = [0] * n
+        stack = []
+        prev_time = 0
+
+        for log in logs:
+            func_id, typ, timestamp = log.split(":")
+            func_id, timestamp = int(func_id), int(timestamp)
+
+            if stack:
+                result[stack[-1]] += timestamp - prev_time
+
+            if typ == "start":
+                stack.append(func_id)
+                prev_time = timestamp
+            else:
+                result[stack.pop()] += 1
+                prev_time = timestamp + 1
+
         return result
