@@ -2,6 +2,8 @@
 This is a practice file for the hard problems in the LeetCode.
 """
 
+from typing import List
+
 
 class Solutions3:
     def trap(self, height) -> int:  # height is an array of integers
@@ -48,8 +50,21 @@ class Solutions3:
                 return target
         return target
 
-    def largestRectangleArea(self, heights) -> int:
+    def largestRectangleArea(self, heights: List[int]) -> int:
         """
         Given an array of integers heights representing the histogram's bar height where the width of each bar is 1,
         return the area of the largest rectangle in the histogram.
         """
+        # monotonic stack solution
+        stack = []
+        max_area = 0
+        heights.append(0)  # append a sentinel value to the end of the heights array
+
+        for i, height in enumerate(heights):
+            while stack and height < heights[stack[-1]]:
+                h = heights[stack.pop()]
+                w = i if not stack else i - stack[-1] - 1
+                max_area = max(max_area, h * w)
+            stack.append(i)
+
+        return max_area

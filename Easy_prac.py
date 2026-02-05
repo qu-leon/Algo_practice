@@ -353,10 +353,10 @@ class Solutions:
         That is for each nums[i] you have to count the number of valid j's such that j != i and nums[j] < nums[i].
         """
         result = []
-        for i, nums in enumerate(nums):
+        for i, num in enumerate(nums):
             count = 0
-            for j, nums in enumerate(nums):
-                if nums[j] < nums[i]:
+            for j, n in enumerate(nums):
+                if n < num:
                     count += 1
             result.append(count)
         return result

@@ -383,8 +383,8 @@ class Solutions2:
         """
         answer = [0] * len(temperatures)
         stack = []
-        for i, temperatures in enumerate(temperatures):
-            while stack and temperatures[i] > temperatures[stack[-1]]:
+        for i, temp in enumerate(temperatures):
+            while stack and temp[i] > temperatures[stack[-1]]:
                 prev = stack.pop()
                 answer[prev] = i - prev  # calculate the number of days to wait
             stack.append(i)
