@@ -2,6 +2,8 @@
 This is a practice file for the easy problems in the LeetCode.
 """
 
+from collections import deque
+
 
 class ListNode:
     def __init__(self, val=0, next=None):
@@ -315,7 +317,7 @@ class Solutions:
         """
         count = 0
         count1 = 0
-        for i in range(len(nums)):
+        for i, nums in enumerate(nums):
             if nums[i] == 1:
                 count += 1
             else:
@@ -351,9 +353,9 @@ class Solutions:
         That is for each nums[i] you have to count the number of valid j's such that j != i and nums[j] < nums[i].
         """
         result = []
-        for i in range(len(nums)):
+        for i, nums in enumerate(nums):
             count = 0
-            for j in range(len(nums)):
+            for j, nums in enumerate(nums):
                 if nums[j] < nums[i]:
                     count += 1
             result.append(count)
@@ -369,6 +371,35 @@ class Solutions:
         for i in range(1, len(nums) + 1):
             if i not in num_set:
                 result.append(i)
+        return result
+
+    def finalPrices(self, prices: list[int]) -> list[int]:
+        """
+        Given the array prices where prices[i] is the price of the ith item in a shop.
+        There is a special discount for items in the shop, if you buy the ith item,
+        you will receive a discount equivalent to prices[j] where j is the minimum index such that j > i and prices[j] <= prices[i].
+        If there is no such j, you will not receive any discount at all.
+        Return an array where the ith element is the final price you will pay for the ith item
+        """
+        # brute force solution
+        # result = []
+        # n = len(prices)
+        # for i in range(n):
+        #     discount = 0
+        #     for j in range(i + 1, n):
+        #         if prices[j] <= prices[i]:
+        #             discount = prices[j]
+        #             break
+        #     result.append(prices[i] - discount)
+        # return result
+
+        # monotonic stack solution
+        result = prices.copy()
+        stack = deque()
+        for i, prices in enumerate(prices):
+            while stack and prices[stack[-1]] >= prices[i]:
+                result[stack.pop()] -= prices[i]
+            stack.append(i)
         return result
 
 

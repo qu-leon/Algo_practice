@@ -376,3 +376,16 @@ class Solutions2:
                 prev_time = timestamp + 1
 
         return result
+
+    def dailyTemperature(self, temperatures: List[int]) -> List[int]:
+        """
+        Given a list of daily temperatures, return a list such that for each day in the input, tells you how many days you would have to wait until a warmer temperature.
+        """
+        answer = [0] * len(temperatures)
+        stack = []
+        for i, temperatures in enumerate(temperatures):
+            while stack and temperatures[i] > temperatures[stack[-1]]:
+                prev = stack.pop()
+                answer[prev] = i - prev  # calculate the number of days to wait
+            stack.append(i)
+        return answer

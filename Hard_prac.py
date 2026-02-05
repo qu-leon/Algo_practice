@@ -47,3 +47,9 @@ class Solutions3:
             elif n > target:
                 return target
         return target
+
+    def largestRectangleArea(self, heights) -> int:
+        """
+        Given an array of integers heights representing the histogram's bar height where the width of each bar is 1,
+        return the area of the largest rectangle in the histogram.
+        """
