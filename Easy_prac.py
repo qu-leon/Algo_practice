@@ -317,8 +317,8 @@ class Solutions:
         """
         count = 0
         count1 = 0
-        for i, nums in enumerate(nums):
-            if nums[i] == 1:
+        for i, num in enumerate(nums):
+            if num[i] == 1:
                 count += 1
             else:
                 count = 0
