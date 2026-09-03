@@ -3,6 +3,7 @@ This is a practice file for the easy problems in the LeetCode.
 """
 
 from collections import deque
+from typing import List
 
 
 class ListNode:
@@ -124,6 +125,36 @@ class Solutions:
                 root.left
             )
             return root
+
+    def isHappy(self, n: int) -> bool:
+        """
+        Write an algorithm to determine if a number is a "happy" number.
+        A happy number is a number defined by the following process:
+        Starting with any positive integer, replace the number by the sum of the squares of its digits,
+        and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.
+        Return true if the number is a happy number, and false otherwise.
+        """
+        seen = set()
+        while n != 1 and n not in seen:
+            seen.add(n)
+            n = sum(int(digit) ** 2 for digit in str(n))
+        return n == 1
+
+    def canPlaceFlower(self, flowerbed: List[int], n: int) -> bool:
+        """
+        Given a flowerbed (represented as a list of 0s and 1s) and a number n,
+        return true if n new flowers can be planted in the flowerbed without violating the no-adjacent-flowers rule.
+        """
+        count = 0
+        length = len(flowerbed)
+        for i in range(length):
+            if flowerbed[i] == 0:
+                emptyLeft = (i == 0) or (flowerbed[i - 1] == 0)
+                emptyRight = (i == length - 1) or (flowerbed[i + 1] == 0)
+                if emptyLeft and emptyRight:
+                    flowerbed[i] = 1
+                    count += 1
+        return count >= n
 
     def isAnagram(self, s: str, t: str) -> bool:
         """
@@ -317,8 +348,8 @@ class Solutions:
         """
         count = 0
         count1 = 0
-        for i, nums in enumerate(nums):
-            if nums[i] == 1:
+        for i, num in enumerate(nums):
+            if num[i] == 1:
                 count += 1
             else:
                 count = 0

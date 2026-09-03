@@ -4,6 +4,52 @@ This is a practice file for the hard problems in the LeetCode.
 
 from typing import List
 
+"""
+There is a directed weighted graph that consists of n nodes numbered from 0 to n - 1. 
+The edges of the graph are initially represented by the given array edges where edges[i] = [fromi, toi, edgeCosti] meaning that there is an edge from fromi to toi with the cost edgeCosti.
+
+Graph(int n, int[][] edges) initializes the object with n nodes and the given edges.
+
+addEdge(int[] edge) adds an edge to the list of edges where edge = [from, to, edgeCost]. 
+It is guaranteed that there is no edge between the two nodes before adding this one.
+
+int shortestPath(int node1, int node2) returns the minimum cost of a path from node1 to node2. 
+If no path exists, return -1. The cost of a path is the sum of the costs of the edges in the path.
+"""
+
+
+class Graph:
+    def __init__(self, n: int, edges: List[List[int]]):
+        self.n = n
+        self.edges = edges
+
+    def addEdge(self, edge: List[int]) -> None:
+        self.edges.append(edge)
+
+    def shortestPath(self, node1: int, node2: int) -> int:
+        import heapq
+
+        graph = {i: [] for i in range(self.n)}
+        for u, v, cost in self.edges:
+            graph[u].append((v, cost))
+
+        heap = [(0, node1)]
+        dist = {i: float("inf") for i in range(self.n)}
+        dist[node1] = 0
+
+        while heap:
+            d, u = heapq.heappop(heap)
+            if u == node2:
+                return d
+            if d > dist[u]:
+                continue
+            for v, cost in graph[u]:
+                if dist[u] + cost < dist[v]:
+                    dist[v] = dist[u] + cost
+                    heapq.heappush(heap, (dist[v], v))
+
+        return -1
+
 
 class Solutions3:
     def trap(self, height) -> int:  # height is an array of integers
