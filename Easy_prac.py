@@ -404,7 +404,7 @@ class Solutions:
                 result.append(i)
         return result
 
-    def finalPrices(self, prices: list[int]) -> list[int]:
+    def finalPrices(self, prices: List[int]) -> List[int]:
         """
         Given the array prices where prices[i] is the price of the ith item in a shop.
         There is a special discount for items in the shop, if you buy the ith item,
@@ -432,6 +432,20 @@ class Solutions:
                 result[stack.pop()] -= prices[i]
             stack.append(i)
         return result
+
+    def rowAndMaximumOnes(self, mat: List[List[int]]) -> List[int]:
+        """
+        Given a binary matrix mat, return the index of the row with the maximum number of 1's and the count of 1's in that row.
+        If there are multiple rows with the same maximum number of 1's, return the one with the smallest index.
+        """
+        maxCount = 0
+        maxRow = 0
+        for i, row in enumerate(mat):
+            count = sum(row)
+            if count > maxCount:
+                maxCount = count
+                maxRow = i
+        return [maxRow, maxCount]
 
 
 class MyQueue:

@@ -3,7 +3,7 @@ This is a practice file for the medium problems in the LeetCode.
 """
 
 import heapq
-from typing import List
+from typing import List, Optional
 
 from matplotlib import collections
 from matplotlib.pylab import matrix
@@ -17,6 +17,26 @@ class TreeNode:
 
 
 class Solutions2:
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        """
+        Given a binary tree, return the values of the nodes visible from the right side.
+        """
+        if not root:
+            return []
+        result = []
+        queue = [root]
+        while queue:
+            level_length = len(queue)
+            for i in range(level_length):
+                node = queue.pop(0)
+                if i == level_length - 1:
+                    result.append(node.val)
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+        return result
+
     def lowestCommonAncestor(
         self, root: "TreeNode", p: "TreeNode", q: "TreeNode"
     ) -> "TreeNode":
@@ -419,3 +439,78 @@ class Solutions2:
             else:
                 [ans.append(x) for x in entry[1]]
         return ans
+
+    def maxProfitII(self, prices: List[int]) -> int:
+        """
+        Given an array prices where prices[i] is the price of a given stock on the ith day.
+        Find the maximum profit you can achieve. You may complete as many transactions as you like (i.e., buy one and sell one share of the stock multiple times).
+        Note: You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before you buy again).
+        """
+        profit = 0
+        for i in range(1, len(prices)):
+            if prices[i] > prices[i - 1]:
+                profit += prices[i] - prices[i - 1]
+        return profit
+
+    def rob(self, nums: List[int]) -> int:
+        """
+        Given an integer array nums representing the amount of money of each house,
+        return the maximum amount of money you can rob tonight without alerting the police.
+        """
+        if not nums:
+            return 0
+        if len(nums) == 1:
+            return nums[0]
+        dp = [0] * len(nums)
+        dp[0] = nums[0]
+        dp[1] = max(nums[0], nums[1])
+        for i in range(2, len(nums)):
+            dp[i] = max(dp[i - 1], dp[i - 2] + nums[i])
+        return dp[-1]
+
+
+class MinStack:
+    """
+    Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
+    """
+
+    def __init__(self):
+        """
+        Initialize the MinStack.
+        """
+        self.min_stack = []
+        self.stack = []  # Main stack to store all elements
+
+    def push(self, x: int) -> None:
+        """
+        Push element x onto the stack.
+        """
+        self.stack.append(x)
+        if not self.min_stack or x <= self.min_stack[-1]:
+            self.min_stack.append(x)
+        else:
+            self.min_stack.append(self.min_stack[-1])
+
+    def pop(self) -> None:
+        """
+        Remove the element on top of the stack.
+        """
+        if self.stack:
+            self.stack.pop()
+            self.min_stack.pop()
+
+    def top(self) -> Optional[int]:
+        """
+        Get the top element of the stack.
+        """
+        if self.stack:
+            return self.stack[-1]
+        return None
+
+    def getMin(self) -> Optional[int]:
+        """
+        Retrieve the minimum element in the stack.
+        """
+        if self.min_stack:
+            return self.min_stack[-1]
+        return None
