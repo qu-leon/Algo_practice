@@ -5,15 +5,18 @@ This is a practice file for the medium problems in the LeetCode.
 import heapq
 from typing import List, Optional
 
-from matplotlib import collections
-from matplotlib.pylab import matrix
-
 
 class TreeNode:
     def __init__(self, x):
         self.val = x
         self.left = None
         self.right = None
+
+
+class Node:
+    def __init__(self, val=0, neighbors=None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
 
 
 class Solutions2:
@@ -376,6 +379,62 @@ class Solutions2:
 
         return stack[0]
 
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        """
+        Given an array nums of distinct integers, return all possible permuatations.
+        """
+        result = []
+
+        def findCombos(path, remaining):
+            if not remaining:
+                result.append(path)
+                return
+            for i in range(len(remaining)):
+                findCombos(path + [remaining[i]], remaining[:i] + remaining[i + 1 :])
+
+        findCombos([], nums)
+        return result
+
+    def nextPermutation(self, nums: List[int]) -> None:
+        """
+        Rearranges numbers into the lexicographically next greater permutation of numbers.
+        If such an arrangement is not possible, it must rearrange it as the lowest possible order (i.e., sorted in ascending order).
+        The replacement must be in-place and use only constant extra memory.
+        """
+        i = len(nums) - 2
+        while i >= 0 and nums[i] >= nums[i + 1]:
+            i -= 1
+        if i >= 0:
+            j = len(nums) - 1
+            while nums[j] <= nums[i]:
+                j -= 1
+            nums[i], nums[j] = nums[j], nums[i]
+        nums[i + 1 :] = reversed(nums[i + 1 :])
+
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        """
+        Given an array of strings, group the anagrams together.
+        """
+        anagrams = {}  # initialize the dictionary to hold anagram groups
+        for s in strs:
+            sorted_s = "".join(sorted(s))
+            if sorted_s not in anagrams:
+                anagrams[sorted_s] = []
+            anagrams[sorted_s].append(s)
+        return list(anagrams.values())
+
+    def maxInteger(self, nums: List[int]) -> int:
+        """
+        Given a list of integers in a nested array, find the max integer
+        """
+        max_val = 0
+        for num in nums:
+            if isinstance(num, list):
+                max_val = max(max_val, self.maxInteger(num))
+            else:
+                max_val = max(max_val, num)
+        return max_val
+
     def exclusiveTime(self, n: int, logs: List[str]) -> List[int]:
         """
         Given the number of functions n and a list of logs representing function calls, return the exclusive time of each function.
@@ -407,7 +466,7 @@ class Solutions2:
         answer = [0] * len(temperatures)
         stack = []
         for i, temp in enumerate(temperatures):
-            while stack and temp[i] > temperatures[stack[-1]]:
+            while stack and temp > temperatures[stack[-1]]:
                 prev = stack.pop()
                 answer[prev] = i - prev  # calculate the number of days to wait
             stack.append(i)

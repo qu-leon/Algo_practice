@@ -3,6 +3,7 @@ This is a practice file for the easy problems in the LeetCode.
 """
 
 from collections import deque
+from datetime import datetime
 from typing import List
 
 
@@ -328,8 +329,7 @@ class Solutions:
         return False
 
     def getConcatenation(self, nums: list[int]) -> list[int]:
-        ans = nums.extend(nums)
-        return ans
+        return nums + nums
 
     def shuffle(self, nums: list[int], n: int) -> list[int]:
         """
@@ -348,8 +348,8 @@ class Solutions:
         """
         count = 0
         count1 = 0
-        for i, num in enumerate(nums):
-            if num[i] == 1:
+        for num in nums:
+            if num == 1:
                 count += 1
             else:
                 count = 0
@@ -427,9 +427,9 @@ class Solutions:
         # monotonic stack solution
         result = prices.copy()
         stack = deque()
-        for i, prices in enumerate(prices):
-            while stack and prices[stack[-1]] >= prices[i]:
-                result[stack.pop()] -= prices[i]
+        for i, price in enumerate(prices):
+            while stack and prices[stack[-1]] >= price:
+                result[stack.pop()] -= price
             stack.append(i)
         return result
 
@@ -446,6 +446,59 @@ class Solutions:
                 maxCount = count
                 maxRow = i
         return [maxRow, maxCount]
+
+    def countWords(self, s: str) -> dict:
+        """
+        Given a string of words, return how many times each word appears.
+        """
+        word_counts = {}
+        for word in s.split():
+            word_counts[word] = word_counts.get(word, 0) + 1
+        return word_counts
+
+    def countCharacters(self, s: str) -> dict:
+        """
+        Given a string of characters, return each character count in ascending character order.
+        """
+        char_counts = {}
+        for char in s:
+            char_counts[char] = char_counts.get(char, 0) + 1
+        return dict(sorted(char_counts.items()))
+
+    def sumOfNum(self, nums: List[int]) -> int:
+        """
+        Given a list of numbers, return the sum of all numbers not divisible by 3 or 7.
+        """
+        return sum(value for value in nums if value % 3 != 0 and value % 7 != 0)
+
+    def uniqueVal(self, s: str) -> dict:
+        """
+        Given a string of characters, return a dictionary of characters that appear exactly once.
+        """
+        char_counts = {}
+        for char in s:
+            char_counts[char] = char_counts.get(char, 0) + 1
+        return {char: count for char, count in char_counts.items() if count == 1}
+
+    def reverseInteger(self, n: int) -> int:
+        """
+        Given an integer, return the integer with its digits reversed.
+        """
+        sign = -1 if n < 0 else 1
+        reversed_num = int(str(abs(n))[::-1])
+        return sign * reversed_num
+
+    def convertDateFormat(
+        self,
+        date: str,
+        input_format: str = "%Y-%m-%d",
+        output_format: str = "%m/%d/%Y",
+    ) -> str:
+        """
+        Given a date string, convert it from one date format to another.
+        """
+        parsed_date = datetime.strptime(date, input_format)
+        return parsed_date.strftime(output_format)
 
 
 class MyQueue:
