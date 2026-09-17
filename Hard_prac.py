@@ -2,7 +2,9 @@
 This is a practice file for the hard problems in the LeetCode.
 """
 
-from typing import List
+from typing import List, Optional
+
+from Easy_prac import ListNode
 
 """
 There is a directed weighted graph that consists of n nodes numbered from 0 to n - 1. 
@@ -114,3 +116,31 @@ class Solutions3:
             stack.append(i)
 
         return max_area
+
+    def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        """
+        Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.
+        k is a positive integer and is less than or equal to the length of the linked list.
+        If the number of nodes is not a multiple of k then left-out nodes, in the end, should remain as it is.
+        """
+        if not head or k == 1:
+            return head
+        dummy = ListNode(0)
+        dummy.next = head
+        prev = dummy
+
+        while True:
+            node = prev
+            for _ in range(k):
+                node = node.next
+                if not node:
+                    return dummy.next
+            tail = prev.next
+            curr = prev.next.next
+            for _ in range(k - 1):
+                next_temp = curr.next
+                curr.next = prev.next
+                prev.next = curr
+                curr = next_temp
+            tail.next = curr
+            prev = tail
