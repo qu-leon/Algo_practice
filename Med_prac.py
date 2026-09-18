@@ -528,6 +528,43 @@ class Solutions2:
         return dp[-1]
 
 
+class LRUCache:
+    """
+    Design and implement a data structure for Least Recently Used (LRU) cache.
+    """
+
+    def __init__(self, capacity: int):
+        """
+        Initialize the LRU cache with positive size capacity
+        """
+        self.capacity = capacity
+        self.cache = {}  # track key-value pairs
+        self.order = []  # track usage order
+
+    def get(self, key: int) -> int:
+        """
+        Retrieve the value of the key if it exists in the cache, otherwise return -1.
+        """
+        if key in self.cache:
+            self.order.remove(key)
+            self.order.append(key)
+            return self.cache[key]
+        return -1
+
+    def put(self, key: int, value: int) -> None:
+        """
+        Update the value of the key if it exists, otherwise add the key-value pair to the cache.
+        If the cache exceeds its capacity, evict the least recently used item.
+        """
+        if key in self.cache:
+            self.order.remove(key)
+        elif len(self.cache) >= self.capacity:
+            lru_key = self.order.pop(0)
+            del self.cache[lru_key]
+        self.cache[key] = value
+        self.order.append(key)
+
+
 class MinStack:
     """
     Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
