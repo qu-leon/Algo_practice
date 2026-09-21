@@ -75,6 +75,7 @@ class Solutions3:
                     total += (
                         left_max - height[left]
                     )  # add the difference between the left_max and the current height to the total
+
                 left += 1
             else:
                 if (
@@ -83,7 +84,9 @@ class Solutions3:
                     right_max = height[right]
                 else:
                     total += right_max - height[right]
+
                 right -= 1
+
         return total
 
     def firstMissingPositive(self, nums) -> int:

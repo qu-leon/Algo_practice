@@ -31,6 +31,14 @@ class Solutions:
             hashmap[num] = i
         return None
 
+    def mergeSortedArray(
+        self, nums1: list[int], m: int, nums2: list[int], n: int
+    ) -> None:
+        """
+        Merge two sorted arrays nums1 and nums2 into nums1 as one sorted array.
+        The first m elements of nums1 are the elements to be merged, and nums1 has enough space to hold additional n elements from nums2.
+        """
+
     def isValidParenthesis(self, s: str) -> bool:
         """
         Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
@@ -113,6 +121,25 @@ class Solutions:
             left_p += 1
             right_p -= 1
         return True
+
+    def isPalindromeInt(self, x: int) -> bool:
+        """
+        Given an integer, determine if it is a palindrome.
+        """
+        if x < 0:
+            return False
+        if x == 0:
+            return True
+
+        num = x
+        reversed_x = 0
+        while num > 0:
+            last_digit = num % 10  # always gets the last digit of num
+            reversed_x = (reversed_x * 10) + last_digit
+            num //= 10  # remove the last digit from num
+        if reversed_x == x:
+            return True
+        return False
 
     def invertTree(self, root):
         """
@@ -262,6 +289,20 @@ class Solutions:
                 return True
         return False
 
+    def removeDuplicates(self, nums: list[int]) -> int:
+        """
+        Given a sorted array nums, remove the duplicates in-place such that each element appears only once and return the new length.
+        Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
+        """
+        if not nums:
+            return 0
+        i = j = 1
+        while j in range(len(nums)):
+            if nums[j] != nums[i - 1]:
+                nums[i] = nums[j]
+                i += 1
+        return i
+
     def isBadVersion(self, n) -> bool:
         pass
 
@@ -302,8 +343,8 @@ class Solutions:
         You are climbing a staircase. It takes n steps to reach the top.
         Each time you can climb 1 or 2 steps. In how many distinct ways can you climb to the top?
         """
-        if n == 1:
-            return 1
+        if n <= 3:
+            return n
         one_step = 1
         two_step = 2
         for _ in range(3, n + 1):

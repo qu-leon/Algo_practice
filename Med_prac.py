@@ -423,6 +423,20 @@ class Solutions2:
             anagrams[sorted_s].append(s)
         return list(anagrams.values())
 
+    def countPrimes(self, n: int) -> int:
+        """
+        Count the number of prime numbers less than a non-negative number, n.
+        """
+        if n < 2:
+            return 0
+        is_prime = [True] * n
+        is_prime[0] = is_prime[1] = False
+        for i in range(2, int(n**0.5) + 1):
+            if is_prime[i]:
+                for j in range(i * i, n, i):
+                    is_prime[j] = False
+        return sum(is_prime)
+
     def maxInteger(self, nums: List[int]) -> int:
         """
         Given a list of integers in a nested array, find the max integer
@@ -434,6 +448,24 @@ class Solutions2:
             else:
                 max_val = max(max_val, num)
         return max_val
+
+    def maxArea(self, height: List[int]) -> int:
+        """
+        Given integer array height representing the height of vertical lines, find the maximum area of water that can be contained between two lines.
+        """
+        left = 0
+        right = len(height) - 1
+        max_area = 0
+
+        while left < right:
+            width = right - left
+            curr_area = width * min(height[left], height[right])
+            max_area = max(max_area, curr_area)
+            if height[left] < height[right]:
+                left += 1
+            else:
+                right -= 1
+        return max_area
 
     def exclusiveTime(self, n: int, logs: List[str]) -> List[int]:
         """
