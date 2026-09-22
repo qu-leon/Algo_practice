@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A coding interview study guide, based on the Software Engineer II recruiter briefing.">
+  <title>Coding Interview Study Guide | Leon</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #fafbf9;
+      --ink: #242925;
+      --muted: #5d665f;
+      --line: #dce1da;
+      --accent: #ad3226;
+      --green: #245f46;
+      --green-tint: #eaf3ec;
+      --gold: #795717;
+      --gold-tint: #faf0d7;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Trebuchet MS", sans-serif; font-size: 16px; line-height: 1.6; letter-spacing: 0; }
+    a { color: var(--green); text-underline-offset: 3px; }
+    a:hover { color: var(--accent); }
+    button, input { font: inherit; }
+    button { padding: 9px 15px; border: 1px solid var(--line); border-radius: 4px; background: #fff; color: var(--ink); cursor: pointer; }
+    button:hover { border-color: var(--ink); }
+    button.primary { background: var(--ink); color: #fff; border-color: var(--ink); }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+    .skip { position: absolute; top: -80px; left: 16px; padding: 10px; background: #fff; z-index: 2; }
+    .skip:focus { top: 12px; }
+    .masthead { border-top: 5px solid var(--accent); border-bottom: 1px solid var(--line); background: repeating-linear-gradient(90deg, transparent 0, transparent 79px, #24292505 79px, #24292505 80px); }
+    .header-inner, .layout, footer { max-width: 1240px; margin: auto; padding-left: 36px; padding-right: 36px; }
+    .header-inner { padding-top: 34px; padding-bottom: 30px; }
+    .eyebrow { margin: 0 0 10px; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0; color: var(--accent); }
+    .header-row { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    h1, h2, h3 { line-height: 1.2; }
+    h1, h2 { font-family: "Palatino Linotype", Palatino, Georgia, serif; font-weight: normal; }
+    h1 { font-size: 40px; margin: 0 0 10px; }
+    h2 { font-size: 29px; margin: 0 0 12px; }
+    h3 { font-size: 18px; margin: 0 0 10px; }
+    p { margin: 0 0 14px; }
+    .subtitle { margin: 0; color: var(--muted); max-width: 680px; }
+    .layout { display: grid; grid-template-columns: 215px minmax(0, 1fr); gap: 54px; }
+    aside { padding-top: 32px; }
+    .sidebar { position: sticky; top: 24px; }
+    .sidebar-title { color: var(--muted); text-transform: uppercase; font-size: 12px; font-weight: bold; margin-bottom: 12px; }
+    nav { display: grid; gap: 3px; }
+    nav a { display: block; padding: 7px 0; text-decoration: none; font-size: 14px; color: var(--ink); }
+    nav span { display: inline-block; width: 25px; color: var(--muted); font-family: Consolas, monospace; font-size: 12px; }
+    .progress-block { margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line); }
+    .progress-count { font-size: 24px; font-variant-numeric: tabular-nums; line-height: 1.3; }
+    .progress-count small { font-size: 14px; color: var(--muted); }
+    progress { display: block; width: 100%; height: 8px; margin: 13px 0; accent-color: var(--green); border: 0; border-radius: 0; background: var(--line); }
+    progress::-webkit-progress-bar { background: var(--line); }
+    progress::-webkit-progress-value { background: var(--green); }
+    progress::-moz-progress-bar { background: var(--green); }
+    .small { font-size: 13px; color: var(--muted); }
+    .reset { font-size: 13px; padding: 5px 10px; margin-top: 8px; }
+    main { min-width: 0; }
+    section { padding: 34px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 10px; }
+    .section-kicker { font: 12px Consolas, monospace; color: var(--accent); margin-bottom: 9px; text-transform: uppercase; }
+    .lead { font-size: 18px; }
+    .two-column { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; margin-top: 22px; }
+    .plain-list { padding-left: 20px; margin: 0; }
+    .plain-list li { margin-bottom: 8px; }
+    .callout { border-left: 3px solid var(--accent); padding: 4px 0 4px 18px; margin-top: 22px; }
+    .callout p:last-child { margin: 0; }
+    .problems { list-style: none; padding: 0; margin: 22px 0 0; counter-reset: problem; }
+    .problem { display: grid; grid-template-columns: 22px minmax(0, 1.25fr) minmax(0, 1fr); gap: 14px; align-items: start; padding: 17px 0; border-top: 1px solid var(--line); counter-increment: problem; }
+    .problem input { width: 19px; height: 19px; margin: 4px 0 0; accent-color: var(--green); cursor: pointer; }
+    .problem-name { font-size: 16px; font-weight: bold; overflow-wrap: anywhere; }
+    .problem-name::before { content: counter(problem, decimal-leading-zero) ". "; color: var(--muted); font: 12px Consolas, monospace; }
+    .problem-name a { color: var(--ink); text-decoration-thickness: 1px; }
+    .problem-meta { margin-top: 6px; font-size: 12px; color: var(--muted); }
+    .difficulty { display: inline-block; padding: 1px 7px; margin-right: 6px; border-radius: 3px; font-size: 11px; font-weight: bold; background: var(--green-tint); color: var(--green); }
+    .difficulty.medium { background: var(--gold-tint); color: var(--gold); }
+    .problem-focus { font-size: 14px; color: var(--muted); padding-top: 1px; }
+    .problem[data-complete="true"] .problem-name a { color: var(--green); }
+    .problem[data-complete="true"] .problem-name::after { content: " / done"; font-size: 11px; font-weight: normal; color: var(--green); white-space: nowrap; }
+    .workflow { width: 100%; height: auto; display: block; margin: 22px 0; }
+    details { border-top: 1px solid var(--line); padding: 15px 0; }
+    summary { cursor: pointer; font-weight: bold; padding-right: 8px; }
+    details > div { padding-top: 13px; }
+    pre { background: #edf1ec; border-left: 3px solid var(--green); padding: 15px 18px; overflow-x: auto; margin: 14px 0; font-size: 13px; line-height: 1.7; }
+    code { font-family: Consolas, "Courier New", monospace; font-size: 0.9em; overflow-wrap: anywhere; }
+    pre code { font-size: inherit; overflow-wrap: normal; }
+    .schedule { list-style: none; padding: 0; margin: 20px 0 0; }
+    .schedule li { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 16px; border-top: 1px solid var(--line); padding: 14px 0; }
+    .session { font: 12px Consolas, monospace; color: var(--accent); padding-top: 4px; }
+    .schedule strong { display: block; }
+    .schedule p { margin: 3px 0 0; color: var(--muted); font-size: 14px; }
+    .steps { padding-left: 23px; margin: 20px 0; }
+    .steps li { padding-left: 6px; margin-bottom: 13px; }
+    .steps li::marker { color: var(--accent); font-weight: bold; }
+    .timing { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin: 22px 0; }
+    .timing div { border-top: 2px solid var(--green); padding-top: 10px; }
+    .timing strong { display: block; font: 16px Consolas, monospace; margin-bottom: 7px; }
+    .timing span { font-size: 13px; color: var(--muted); }
+    blockquote { margin: 18px 0; padding: 0 0 0 20px; border-left: 3px solid var(--green); font-family: Georgia, serif; font-size: 17px; }
+    footer { padding-top: 22px; padding-bottom: 30px; font-size: 12px; color: var(--muted); }
+    [hidden] { display: none !important; }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 180px minmax(0, 1fr); gap: 30px; }
+      .header-inner, .layout, footer { padding-left: 24px; padding-right: 24px; }
+      .problem { grid-template-columns: 22px minmax(0, 1fr); }
+      .problem-focus { grid-column: 2; padding: 0; }
+      .two-column { gap: 20px; }
+    }
+    @media (max-width: 640px) {
+      .header-inner, .layout, footer { padding-left: 20px; padding-right: 20px; }
+      .header-row { align-items: flex-start; flex-direction: column; gap: 16px; }
+      h1 { font-size: 32px; }
+      h2 { font-size: 26px; }
+      .layout { display: block; }
+      aside { padding-top: 22px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+      .sidebar { position: static; }
+      nav { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 12px; }
+      .progress-block { margin-top: 14px; padding-top: 16px; }
+      .progress-count { font-size: 22px; }
+      section { padding: 28px 0; }
+      .two-column { grid-template-columns: 1fr; }
+      .timing { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .schedule li { grid-template-columns: 68px minmax(0, 1fr); gap: 10px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    @media print {
+      @page { margin: 15mm; }
+      body { background: #fff; font-size: 10pt; color: #000; }
+      .masthead { background: none; border-top: 0; }
+      .header-inner, .layout, footer { max-width: none; padding-left: 0; padding-right: 0; }
+      .header-inner { padding-top: 0; padding-bottom: 14px; }
+      h1 { font-size: 26pt; }
+      h2 { font-size: 20pt; }
+      h3 { font-size: 12pt; }
+      aside, .actions, .skip, .no-print { display: none !important; }
+      .layout { display: block; }
+      section { padding: 18px 0; }
+      h2, h3, summary { break-after: avoid; }
+      .problem, details, .schedule li, pre, .timing, blockquote { break-inside: avoid; }
+      .problem { grid-template-columns: 19px minmax(0, 1.25fr) minmax(0, 1fr); padding: 10px 0; }
+      .problem-focus { grid-column: auto; font-size: 10pt; }
+      .problem-name { font-size: 11pt; }
+      .problem-meta { font-size: 9pt; }
+      .lead { font-size: 12pt; }
+      a { color: #000; }
+      pre { white-space: pre-wrap; font-size: 9pt; }
+      .workflow { max-width: 500px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to study guide</a>
+  <header class="masthead">
+    <div class="header-inner">
+      <p class="eyebrow">Nike / Software Engineer II / Coding round</p>
+      <div class="header-row">
+        <div>
+          <h1>Coding Interview Study Guide</h1>
+          <p class="subtitle">A focused plan for a 60-minute assessment of problem solving, data manipulation, and clear communication.</p>
+        </div>
+        <div class="actions"><button class="primary" id="print-guide" type="button" hidden>Print / Save PDF</button></div>
+      </div>
+    </div>
+  </header>
+  <div class="layout">
+    <aside aria-label="Study navigation and progress">
+      <div class="sidebar">
+        <p class="sidebar-title">Study outline</p>
+        <nav aria-label="Sections">
+          <a href="#priorities"><span>01</span> What to prioritize</a>
+          <a href="#problems"><span>02</span> LeetCode practice</a>
+          <a href="#parsing"><span>03</span> Practical exercises</a>
+          <a href="#python"><span>04</span> Python essentials</a>
+          <a href="#schedule"><span>05</span> Seven-session plan</a>
+          <a href="#practice"><span>06</span> Practice method</a>
+          <a href="#interview"><span>07</span> Interview day</a>
+        </nav>
+        <div class="progress-block" id="progress-panel" hidden>
+          <p class="sidebar-title">Practice progress</p>
+          <div class="progress-count" aria-live="polite"><span id="completed-count">0</span><small> / 14 problems complete</small></div>
+          <progress id="progress" value="0" max="14" aria-label="Completed LeetCode problems"></progress>
+          <p class="small" id="save-status" role="status">Progress stored in this browser.</p>
+          <button class="reset" type="button" id="reset-progress">Reset progress</button>
+        </div>
+      </div>
+    </aside>
+    <main id="main">
+      <section id="priorities" aria-labelledby="priorities-title">
+        <p class="section-kicker">01 / The brief</p>
+        <h2 id="priorities-title">Fundamentals first.</h2>
+        <p class="lead">Prioritize arrays, strings, dictionaries, sets, searching, and structured-text parsing.</p>
+        <p>The recruiter's email emphasizes analyzing problems, transforming collections, communicating tradeoffs, testing edge cases, and explaining complexity. For this round, those are stronger signals than system design or framework expertise.</p>
+        <div class="two-column">
+          <div><h3>Spend most of your time on</h3><ul class="plain-list"><li>Counting, grouping, and deduplicating data.</li><li>Parsing strings into useful records.</li><li>Iteration, searching, sorting, and two pointers.</li><li>Readable solutions with explicit tests.</li></ul></div>
+          <div><h3>Keep in perspective</h3><ul class="plain-list"><li>Use Python if it is your strongest language.</li><li>Practice easy and relevant medium problems.</li><li>Stacks and sliding windows are useful follow-ups.</li><li>Hard dynamic programming is not the main priority here.</li></ul></div>
+        </div>
+        <div class="callout"><p><strong>Preparation, not a prediction.</strong> These exercises match the concepts in the recruiter's email. They are not confirmed Nike questions, and the exact difficulty and number of problems are unknown.</p></div>
+      </section>
+      <section id="problems" aria-labelledby="problems-title">
+        <p class="section-kicker">02 / The practice set</p>
+        <h2 id="problems-title">Fourteen focused problems.</h2>
+        <p>Work roughly in order. A completed problem means you can solve it without the solution, explain why it works, test edge cases, and discuss time and extra space.</p>
+        <ol class="problems">
+          <li class="problem"><input type="checkbox" id="lc-217" aria-label="Mark Contains Duplicate complete"><div><div class="problem-name"><a href="https://leetcode.com/problems/contains-duplicate/">217. Contains Duplicate</a></div><div class="problem-meta"><span class="difficulty">Easy</span> Sets / duplicate detection</div></div><div class="problem-focus">Compare nested loops with a set. Explain early return and the time-space tradeoff.</div></li>
+          <li class="problem"><input type="checkbox" id="lc-242" aria-label="Mark Valid Anagram complete"><div><div class="problem-name"><a href="https://leetcode.com/problems/valid-anagram/">242. Valid Anagram</a></div><div class="problem-meta"><span class="difficulty">Easy</span> Frequency counting</div></div><div class="problem-focus">Compare character counts with sorting. Clarify the allowed character set.</div></li>
+          <li class="problem"><input type="checkbox" id="lc-1" aria-label="Mark Two Sum complete"><div><div class="problem-name"><a href="https://leetcode.com/problems/two-sum/">1. Two Sum</a></div><div class="problem-meta"><span class="difficulty">Easy</span> Dictionary lookups</div></div><div class="problem-focus">Look up complements, retain indices, and avoid reusing the same element.</div></li>
+          <li class="problem"><input type="checkbox" id="lc-383" aria-label="Mark Ransom Note complete"><div><div class="problem-name"><a href="https://leetcode.com/problems/ransom-note/">383. Ransom Note</a></div><div class="problem-meta"><span class="difficulty">Easy</span> Counting / consumption</div></div><div class="problem-focus">Track available occurrences. Explain why a set cannot capture multiplicity.</div></li>
+          <li class="problem"><input type="checkbox" id="lc-125" aria-label="Mark Valid Palindrome complete"><div><div class="problem-name"><a href="https://leetcode.com/problems/valid-palindrome/">125. Valid Palindrome</a></div><div class="problem-meta"><span class="difficulty">Easy</span> Strings / two pointers</div></div><div class="problem-focus">Handle case and non-alphanumeric characters. Compare copying with scanning.</div></li>
+          <li class="problem"><input type="checkbox" id="lc-283" aria-label="Mark Move Zeroes complete"><div><div class="problem-name"><a href="https://leetcode.com/problems/move-zeroes/">283. Move Zeroes</a></div><div class="problem-meta"><span class="difficulty">Easy</span> In-place arrays</div></div><div class="problem-focus">Preserve nonzero order and explain what each pointer represents.</div></li>
+          <li class="problem"><input type="checkbox" id="lc-88" aria-label="Mark Merge Sorted Array complete"><div><div class="problem-name"><a href="https://leetcode.com/problems/merge-sorted-array/">88. Merge Sorted Array</a></div><div class="problem-meta"><span class="difficulty">Easy</span> Merging sorted data</div></div><div class="problem-focus">Avoid overwriting unprocessed values. Account for unused buffer capacity.</div></li>
+          <li class="problem"><input type="checkbox" id="lc-704" aria-label="Mark Binary Search complete"><div><div class="problem-name"><a href="https://leetcode.com/problems/binary-search/">704. Binary Search</a></div><div class="problem-meta"><span class="difficulty">Easy</span> Searching</div></div><div class="problem-focus">Require sorted input. Explain inclusive boundaries and why the interval shrinks.</div></li>
+          <li class="problem"><input type="checkbox" id="lc-819" aria-label="Mark Most Common Word complete"><div><div class="problem-name"><a href="https://leetcode.com/problems/most-common-word/">819. Most Common Word</a></div><div class="problem-meta"><span class="difficulty">Easy</span> Text parsing / counting</div></div><div class="problem-focus">Normalize punctuation and case, exclude banned words, then count. High-priority parsing practice.</div></li>
+          <li class="problem"><input type="checkbox" id="lc-811" aria-label="Mark Subdomain Visit Count complete"><div><div class="problem-name"><a href="https://leetcode.com/problems/subdomain-visit-count/">811. Subdomain Visit Count</a></div><div class="problem-meta"><span class="difficulty medium">Medium</span> Parsing / aggregation</div></div><div class="problem-focus">Extract counts and domains, generate suffixes, and accumulate totals.</div></li>
+          <li class="problem"><input type="checkbox" id="lc-49" aria-label="Mark Group Anagrams complete"><div><div class="problem-name"><a href="https://leetcode.com/problems/group-anagrams/">49. Group Anagrams</a></div><div class="problem-meta"><span class="difficulty medium">Medium</span> Grouping / dictionary keys</div></div><div class="problem-focus">Choose a canonical key. Include word length when analyzing complexity.</div></li>
+          <li class="problem"><input type="checkbox" id="lc-20" aria-label="Mark Valid Parentheses complete"><div><div class="problem-name"><a href="https://leetcode.com/problems/valid-parentheses/">20. Valid Parentheses</a></div><div class="problem-meta"><span class="difficulty">Easy</span> Stacks</div></div><div class="problem-focus">Match nesting order; test unmatched openings, closings, and an empty stack.</div></li>
+          <li class="problem"><input type="checkbox" id="lc-3" aria-label="Mark Longest Substring Without Repeating Characters complete"><div><div class="problem-name"><a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/">3. Longest Substring Without Repeating Characters</a></div><div class="problem-meta"><span class="difficulty medium">Medium</span> Sliding windows</div></div><div class="problem-focus">Maintain a duplicate-free window. Explain why both pointers only move forward.</div></li>
+          <li class="problem"><input type="checkbox" id="lc-937" aria-label="Mark Reorder Data in Log Files complete"><div><div class="problem-name"><a href="https://leetcode.com/problems/reorder-data-in-log-files/">937. Reorder Data in Log Files</a></div><div class="problem-meta"><span class="difficulty medium">Medium</span> Parsing / custom sorting</div></div><div class="problem-focus">Separate identifiers from content, define tie-breaks, and preserve digit-log order.</div></li>
+        </ol>
+      </section>
+      <section id="parsing" aria-labelledby="parsing-title">
+        <p class="section-kicker">03 / Beyond LeetCode</p>
+        <h2 id="parsing-title">Turn raw input into useful data.</h2>
+        <p>Spend about one-third of your preparation on practical exercises. Input guarantees are part of the problem: ask about them before adding validation or skipping records.</p>
+        <svg class="workflow" viewBox="0 0 640 100" role="img" aria-labelledby="flow-title flow-description">
+          <title id="flow-title">A data-processing workflow</title>
+          <desc id="flow-description">Raw records are parsed, grouped into totals, and sorted into output.</desc>
+          <path d="M 0 75 H 640" stroke="#dce1da" fill="none"/>
+          <path d="M 100 35 H 167 M 265 35 H 327 M 425 35 H 487" stroke="#245f46" stroke-width="2" fill="none"/>
+          <path d="m 161 29 6 6 -6 6 m 160 -12 6 6 -6 6 m 160 -12 6 6 -6 6" stroke="#245f46" stroke-width="2" fill="none"/>
+          <g font-family="Trebuchet MS, sans-serif" font-size="17" fill="#242925"><text x="0" y="40">Records</text><text x="185" y="40">Parse</text><text x="345" y="40">Group</text><text x="505" y="40">Sort</text></g>
+          <g font-family="Consolas, monospace" font-size="13" fill="#5d665f"><text x="0" y="96">text input</text><text x="185" y="96">typed fields</text><text x="345" y="96">totals</text><text x="505" y="96">output</text></g>
+        </svg>
+        <details open><summary>Exercise A / Aggregate transactions</summary><div>
+          <p>Given records formatted as <code>"userId,productId,quantity"</code>, return total quantity per product, sorted by total descending and product ID ascending.</p>
+          <pre><code>Input:
+["u1,p2,2", "u2,p1,3", "u1,p2,1"]
+
+Expected output:
+[("p1", 3), ("p2", 3)]</code></pre>
+          <p><strong>Clarify:</strong> Do duplicates count as separate purchases? Are negative quantities valid? Can fields contain quoted commas? What happens to malformed records?</p>
+          <p><strong>Discuss:</strong> Parse, accumulate in a dictionary, then sort. With L input characters and k products, a typical analysis is O(L + k log k) time assuming constant-cost key comparisons and arithmetic. Long string keys can add comparison costs; retained identifier lengths affect storage.</p>
+        </div></details>
+        <details open><summary>Exercise B / Deduplicate records</summary><div><p>Given records with an <code>id</code> and a payload, keep the first occurrence of each ID while preserving input order.</p><p><strong>Clarify:</strong> Can IDs be missing? If duplicate IDs have different payloads, does the first still win?</p><p><strong>Test:</strong> Empty input, all unique IDs, all identical IDs, and duplicates far apart. Explain the space used by the seen-ID set and the output.</p></div></details>
+        <details open><summary>Exercise C / Join users and purchases</summary><div><p>Combine user records with purchases by <code>userId</code>. Return each user with their purchase list, including users with no purchases.</p><p><strong>Clarify:</strong> How should unmatched purchases and duplicate user IDs be handled? What order should users and purchases have?</p><p><strong>Discuss:</strong> Compare repeatedly scanning purchases for each user with indexing or grouping once.</p></div></details>
+        <details open><summary>Exercise D / Analyze log records</summary><div><p>Parse timestamp, severity, and message from each line. Count <code>ERROR</code> records by hour and return hours chronologically.</p><p><strong>Clarify:</strong> Timestamp format and timezone, case sensitivity, malformed lines, and messages containing spaces.</p><p><strong>Test:</strong> No errors, multiple hours, out-of-order input, and records on an hour boundary.</p></div></details>
+        <div class="callout"><p><strong>Match the parser to the contract.</strong> Simple delimiter-separated fields may work with <code>split</code>. Actual CSV with quoted delimiters calls for <code>csv</code>, if standard-library use is allowed.</p></div>
+      </section>
+      <section id="python" aria-labelledby="python-title">
+        <p class="section-kicker">04 / Language fluency</p>
+        <h2 id="python-title">Python essentials.</h2>
+        <div class="two-column">
+          <div><h3>Know the operations</h3><ul class="plain-list"><li><code>dict.get</code>, <code>Counter</code>, <code>defaultdict</code>, and set membership.</li><li><code>enumerate</code>, <code>zip</code>, and dictionary <code>items()</code>.</li><li><code>split</code>, <code>strip</code>, <code>join</code>, and integer conversion.</li><li><code>sorted(..., key=...)</code> with tuple keys for tie-breaking.</li><li>Lists as stacks using <code>append</code> and <code>pop</code>.</li></ul></div>
+          <div><h3>Know their costs</h3><ul class="plain-list"><li>List membership: O(n) in the worst case.</li><li>Set/dictionary lookup: average O(1), not a worst-case guarantee.</li><li>Building a set: expected O(n) time and up to O(n) extra space.</li><li>Sorting: generally O(n log n) comparisons; key and comparison costs matter.</li><li>A list slice of k elements copies O(k) references.</li></ul></div>
+        </div>
+        <p style="margin-top: 20px">For strings, account for total characters as well as record count. State whether you include returned output in your space analysis. Favor readable loops over dense one-liners when parsing or validation needs explanation.</p>
+      </section>
+      <section id="schedule" aria-labelledby="schedule-title">
+        <p class="section-kicker">05 / A manageable schedule</p>
+        <h2 id="schedule-title">Seven focused sessions.</h2>
+        <p>Plan for 60-90 minutes per session. The numbers below refer to the practice order above, not LeetCode IDs. Revisit earlier mistakes before starting new material.</p>
+        <ol class="schedule">
+          <li><span class="session">SESSION 1</span><div><strong>Sets, dictionaries, and counting</strong><p>Problems 1-4. Compare brute force, sorting, and hash-based solutions.</p></div></li>
+          <li><span class="session">SESSION 2</span><div><strong>Strings and in-place arrays</strong><p>Problems 5-7. Explain pointer meaning and which values are safe to overwrite.</p></div></li>
+          <li><span class="session">SESSION 3</span><div><strong>Search and stacks</strong><p>Problems 8 and 12, then the deduplication exercise. Test boundaries explicitly.</p></div></li>
+          <li><span class="session">SESSION 4</span><div><strong>Parsing and aggregation</strong><p>Problems 9-10, then transaction aggregation. Clarify input and output contracts.</p></div></li>
+          <li><span class="session">SESSION 5</span><div><strong>Grouping, joining, and sorting</strong><p>Problems 11 and 14, then joining users and purchases. Discuss tie-breaking.</p></div></li>
+          <li><span class="session">SESSION 6</span><div><strong>Sliding windows and weak spots</strong><p>Problem 13. Repeat your two weakest problems without hints; add log analysis if time permits.</p></div></li>
+          <li><span class="session">SESSION 7</span><div><strong>Full mock interview</strong><p>Run a 60-minute mock without AI or solution hints. Review correctness, communication, tests, and pacing afterward.</p></div></li>
+        </ol>
+        <p class="small">If a session runs long, carry a problem forward. Understanding a solution is more important than finishing a daily quota.</p>
+      </section>
+      <section id="practice" aria-labelledby="practice-title">
+        <p class="section-kicker">06 / Repeatable technique</p>
+        <h2 id="practice-title">Practice the whole conversation.</h2>
+        <ol class="steps">
+          <li><strong>Clarify.</strong> Restate the input and output. Ask about ordering, duplicates, constraints, malformed data, and whether input mutation is allowed.</li>
+          <li><strong>Outline.</strong> Work through a small example. State a simple approach and explain why the data structure fits.</li>
+          <li><strong>Implement.</strong> Use readable names and purposeful functions. Explain decisions instead of narrating every keystroke.</li>
+          <li><strong>Test.</strong> Check ordinary input, empty and single-element input when allowed, duplicates, no match, and boundary positions.</li>
+          <li><strong>Analyze.</strong> Define input sizes. Include sorting, slicing, parsing, and output storage where relevant.</li>
+          <li><strong>Improve.</strong> Identify a concrete bottleneck. Explain an alternative and its tradeoff before rewriting.</li>
+        </ol>
+        <blockquote>"I'm using a dictionary because I need a total for each product without repeatedly scanning the existing results."</blockquote>
+        <p>Allow about 25-30 minutes for an initial attempt. If stuck, describe your options and try a smaller example. After using a hint, record the missing idea and solve the problem again later without looking.</p>
+        <p><strong>After each attempt:</strong> Note the bug or missed assumption, the underlying concept, and a test case that would have exposed it.</p>
+      </section>
+      <section id="interview" aria-labelledby="interview-title">
+        <p class="section-kicker">07 / The assessment</p>
+        <h2 id="interview-title">Make your reasoning visible.</h2>
+        <p>A sample 60-minute mock for one main problem with follow-ups is below. This is a rehearsal structure, not a confirmed interview agenda. Adapt if the interviewer gives multiple problems.</p>
+        <div class="timing">
+          <div><strong>0-8 min</strong><span>Clarify requirements and work through an example.</span></div>
+          <div><strong>8-15 min</strong><span>Outline a solution and discuss initial complexity.</span></div>
+          <div><strong>15-40 min</strong><span>Implement, narrate decisions, and run small checks.</span></div>
+          <div><strong>40-60 min</strong><span>Test, debug, address follow-ups, and explain tradeoffs.</span></div>
+        </div>
+        <div class="two-column">
+          <div><h3>Before the interview</h3><ul class="plain-list"><li>Confirm the platform and Python availability.</li><li>Ask whether code execution and standard-library use are supported.</li><li>Ask whether to expect one problem with follow-ups or several problems.</li><li>Practice once in a plain editor without AI assistance.</li></ul></div>
+          <div><h3>Final self-check</h3><ul class="plain-list"><li>Can I explain why my solution is correct?</li><li>Did I test boundaries and duplicates?</li><li>Can I justify time and extra space?</li><li>Can I describe one alternative?</li><li>Did I communicate assumptions instead of guessing?</li></ul></div>
+        </div>
+        <div class="callout"><p><strong>The target:</strong> Solve an unfamiliar array, string, or data-processing problem clearly, validate it, and defend your approach. A smaller set of deeply understood problems beats a large memorized solution count.</p></div>
+      </section>
+    </main>
+  </div>
+  <footer>Personal preparation guide / Based on the recruiter's coding-round email / September 2026 / Not an official Nike interview syllabus.</footer>
+  <script>
+    (() => {
+      const storageKey = "leon-coding-interview-guide-v1";
+      const checkboxes = [...document.querySelectorAll(".problem input[type='checkbox']")];
+      const progress = document.getElementById("progress");
+      const count = document.getElementById("completed-count");
+      const saveStatus = document.getElementById("save-status");
+      let storageAvailable = true;
+
+      const updateProgress = () => {
+        const completed = checkboxes.filter(checkbox => checkbox.checked);
+        count.textContent = completed.length;
+        progress.value = completed.length;
+        checkboxes.forEach(checkbox => {
+          checkbox.closest(".problem").dataset.complete = String(checkbox.checked);
+        });
+      };
+
+      const persist = () => {
+        try {
+          localStorage.setItem(storageKey, JSON.stringify(checkboxes.filter(checkbox => checkbox.checked).map(checkbox => checkbox.id)));
+          storageAvailable = true;
+        } catch {
+          storageAvailable = false;
+        }
+        saveStatus.textContent = storageAvailable ? "Progress stored in this browser." : "Browser storage unavailable. Progress will not be saved.";
+      };
+
+      try {
+        const stored = JSON.parse(localStorage.getItem(storageKey) || "[]");
+        if (Array.isArray(stored)) {
+          checkboxes.forEach(checkbox => { checkbox.checked = stored.includes(checkbox.id); });
+        }
+      } catch {
+        storageAvailable = false;
+      }
+      updateProgress();
+      persist();
+      document.getElementById("progress-panel").hidden = false;
+      checkboxes.forEach(checkbox => checkbox.addEventListener("change", () => {
+        updateProgress();
+        persist();
+      }));
+
+      document.getElementById("reset-progress").addEventListener("click", () => {
+        if (!confirm("Reset all 14 practice checkboxes?")) return;
+        checkboxes.forEach(checkbox => { checkbox.checked = false; });
+        updateProgress();
+        persist();
+      });
+
+      let closedDetails = [];
+      window.addEventListener("beforeprint", () => {
+        closedDetails = [...document.querySelectorAll("details:not([open])")];
+        closedDetails.forEach(detail => { detail.open = true; });
+      });
+      window.addEventListener("afterprint", () => {
+        closedDetails.forEach(detail => { detail.open = false; });
+        closedDetails = [];
+      });
+      const printButton = document.getElementById("print-guide");
+      printButton.hidden = false;
+      printButton.addEventListener("click", () => window.print());
+    })();
+  </script>
+</body>
+</html>

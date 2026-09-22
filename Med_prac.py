@@ -4,6 +4,7 @@ This is a practice file for the medium problems in the LeetCode.
 
 import heapq
 from typing import List, Optional
+from Easy_prac import ListNode
 
 
 class TreeNode:
@@ -449,6 +450,17 @@ class Solutions2:
                 max_val = max(max_val, num)
         return max_val
 
+    def reverseInt(self, x: int) -> int:
+        """
+        Given a 32-bit signed integer, reverse digits of an integer.
+        """
+        sign = -1 if x < 0 else 1
+        reversed_int = int(str(abs(x))[::-1])
+        result = sign * reversed_int
+        if result < -(2**31) or result > 2**31 - 1:
+            return 0
+        return result
+
     def maxArea(self, height: List[int]) -> int:
         """
         Given integer array height representing the height of vertical lines, find the maximum area of water that can be contained between two lines.
@@ -558,6 +570,29 @@ class Solutions2:
         for i in range(2, len(nums)):
             dp[i] = max(dp[i - 1], dp[i - 2] + nums[i])
         return dp[-1]
+
+    def addTwoNumbers(
+        self, l1: ListNode | None, l2: ListNode | None
+    ) -> ListNode | None:
+        """
+        You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
+        You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+        """
+        dummy = ListNode(0)
+        current = dummy
+        carry = 0
+        while l1 or l2 or carry:
+            val1 = l1.val if l1 else 0
+            val2 = l2.val if l2 else 0
+            total = val1 + val2 + carry
+            carry = total // 10
+            current.next = ListNode(total % 10)
+            current = current.next
+            if l1:
+                l1 = l1.next
+            if l2:
+                l2 = l2.next
+        return dummy.next
 
 
 class LRUCache:

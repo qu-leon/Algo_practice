@@ -353,6 +353,7 @@ class Solutions:
 
     def containsDuplicates(self, nums) -> bool:
         # brute force solution
+
         # num = len(nums)
         # for i in range(num):
         #     for j in range(i + 1, len(nums)):
@@ -361,6 +362,7 @@ class Solutions:
         # return False  # if no duplicates are found, return false
 
         # hash solution
+
         hash_set = set()
         for i in nums:
             if i in hash_set:  # if set contains current element, return True
@@ -368,6 +370,9 @@ class Solutions:
             else:
                 hash_set.add(i)  # add current element to list
         return False
+
+        # quicksolution to check length
+        # return len(nums) > len(set(nums))
 
     def getConcatenation(self, nums: list[int]) -> list[int]:
         return nums + nums
