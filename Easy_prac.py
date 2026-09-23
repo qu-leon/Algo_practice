@@ -38,6 +38,22 @@ class Solutions:
         Merge two sorted arrays nums1 and nums2 into nums1 as one sorted array.
         The first m elements of nums1 are the elements to be merged, and nums1 has enough space to hold additional n elements from nums2.
         """
+        if n == 0:
+            return
+
+        # start merging from the end of the arrays
+        m -= 1
+        n -= 1
+        final = m + n + 1
+
+        while n >= 0:
+            if m >= 0 and nums1[m] > nums2[n]:
+                nums1[final] = nums1[m]
+                m -= 1
+            else:
+                nums1[final] = nums2[n]
+                n -= 1
+            final -= 1
 
     def isValidParenthesis(self, s: str) -> bool:
         """
@@ -101,6 +117,20 @@ class Solutions:
             profit = max(profit, p - buy_price)
 
         return profit
+
+    def moveZeroes(self, nums: list[int]) -> None:
+        """
+        Given an array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+        """
+        # uses two pointers to move zeroes to the end
+        last_non_zero_found_at = 0
+        for i in range(len(nums)):
+            if nums[i] != 0:
+                nums[last_non_zero_found_at], nums[i] = (
+                    nums[i],
+                    nums[last_non_zero_found_at],
+                )
+                last_non_zero_found_at += 1
 
     def isPalindrome(self, s: str) -> bool:
         """
@@ -325,6 +355,15 @@ class Solutions:
         Given two strings ransomNote and magazine, return true if ransomNote can be constructed from magazine and false otherwise.
         Each letter in magazine can only be used once in ransomNote.
         """
+        # using Counter python collections functions
+
+        # magazineCount = Counter(magazine)
+        # ransomCount = Counter(ransomNote)
+        # isSubset = not(ransomCount - magazineCount)
+        # if isSubset:
+        #    return True
+        # return False
+
         hashmap = {}
         for char in magazine:
             if char in hashmap:
