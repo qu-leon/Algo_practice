@@ -5,6 +5,8 @@ This is a practice file for the easy problems in the LeetCode.
 from collections import deque
 from datetime import datetime
 from typing import List
+import re
+from collections import Counter
 
 
 class ListNode:
@@ -30,6 +32,16 @@ class Solutions:
                 return [hashmap[diff], i]
             hashmap[num] = i
         return None
+
+    def mostCommonWord(self, paragraph: str, banned: List[str]) -> str:
+        """
+        Given a paragraph and a list of banned words, return the most frequent word that is not banned.
+        Words in the paragraph are case-insensitive and the answer should be returned in lowercase.
+        """
+        words = re.findall(r"\w+", paragraph.lower())
+        banned_set = set(banned)
+        counter = Counter(word for word in words if word not in banned_set)
+        return counter.most_common(1)[0][0] if counter else ""
 
     def mergeSortedArray(
         self, nums1: list[int], m: int, nums2: list[int], n: int
@@ -245,7 +257,9 @@ class Solutions:
         left = 0
         right = len(nums) - 1
         while left <= right:
-            mid = left + (right - left) // 2  # to prevent overflow
+            mid = (
+                left + (right - left) // 2
+            )  # to prevent overflow, mid = (left + right) // 2 also works in Python due to no overflow
             if nums[mid] == target:
                 return mid  # target found
             elif nums[mid] < target:
