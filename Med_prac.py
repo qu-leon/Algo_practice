@@ -15,9 +15,10 @@ class TreeNode:
 
 
 class Node:
-    def __init__(self, val=0, neighbors=None):
-        self.val = val
-        self.neighbors = neighbors if neighbors is not None else []
+    def __init__(self, x: int, next: "Node" = None, random: "Node" = None):
+        self.val = int(x)
+        self.next = next
+        self.random = random
 
 
 class Solutions2:
@@ -287,6 +288,24 @@ class Solutions2:
         for i in range(n - 2, -1, -1):  # iterate backwards
             right[i] = right[i + 1] * nums[i + 1]
         return [left[i] * right[i] for i in range(n)]
+
+    def copyRandomList(self, head: "Optional[Node]") -> "Optional[Node]":
+        """
+        Given a linked list where each node contains an additional random pointer which could point to any node in the list or null, return a deep copy of the list.
+        """
+        if not head:
+            return None
+        old_to_new = {}
+        current = head
+        while current:
+            old_to_new[current] = Node(current.val)
+            current = current.next
+        current = head
+        while current:
+            old_to_new[current].next = old_to_new.get(current.next)
+            old_to_new[current].random = old_to_new.get(current.random)
+            current = current.next
+        return old_to_new[head]
 
     def generateParentheses(self, n: int):
         """
@@ -628,6 +647,27 @@ class Solutions2:
             if l2:
                 l2 = l2.next
         return dummy.next
+
+
+class DataStream:
+    """
+    DataStream class to handle a stream of data and provide operations on it.
+    """
+
+    def __init__(self, value: int, k: int):
+        self.value = value
+        self.k = k
+        self.counter = 0
+
+    def consec(self, num: int) -> bool:
+        """
+        Add a number to data stream and check if last k int are equal to value.
+        """
+        if num == self.value:
+            self.counter += 1
+        else:
+            self.counter = 0
+        return self.counter >= self.k
 
 
 class LRUCache:
