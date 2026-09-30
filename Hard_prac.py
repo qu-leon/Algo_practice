@@ -3,7 +3,7 @@ This is a practice file for the hard problems in the LeetCode.
 """
 
 from typing import List, Optional
-
+import heapq
 from Easy_prac import ListNode
 
 """
@@ -29,8 +29,6 @@ class Graph:
         self.edges.append(edge)
 
     def shortestPath(self, node1: int, node2: int) -> int:
-        import heapq
-
         graph = {i: [] for i in range(self.n)}
         for u, v, cost in self.edges:
             graph[u].append((v, cost))

@@ -160,6 +160,36 @@ class Solutions2:
             k, points, lambda x: x[0] ** 2 + x[1] ** 2
         )  # returns the k smallest elements from the points list based on the distance from the origin
 
+    def subdomainVisits(self, cpdomains: list[str]) -> list[str]:
+        """
+        Given a list of count-paired domains, return the count of visits for each subdomain.
+        """
+        count_dict = {}
+        for domains in cpdomains:
+            count, domain = domains.split()
+            count = int(count)
+            subdomains = domain.split(".")
+            for i in range(len(subdomains)):
+                subdomain = ".".join(subdomains[i:])
+                count_dict[subdomain] = count_dict.get(subdomain, 0) + count
+        return [f"{count} {subdomain}" for subdomain, count in count_dict.items()]
+
+    def reorderLogFiles(self, logs: list[str]) -> list[str]:
+        """
+        Given an array of logs, reorder them so that all the letter-logs come before any digit-log.
+        The letter-logs are ordered lexicographically by content, and the digit-logs remain in their original order.
+        """
+        letter_logs = []
+        digit_logs = []
+        for log in logs:
+            if log.split()[1].isdigit():
+                digit_logs.append(log)
+            else:
+                letter_logs.append(log)
+
+        letter_logs.sort(key=lambda x: (x.split()[1:], x.split()[0]))
+        return letter_logs + digit_logs
+
     def lengthOfLongestSubstring(self, s: str) -> int:
         """
         Given a string s, find the length of the longest substring without duplicate characters.
